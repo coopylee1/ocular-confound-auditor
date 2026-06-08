@@ -1,0 +1,20 @@
+# Third-party data — not redistributed; fetch with data/get_eegmmidb.sh
+data/eegmmidb/
+
+# R session / build junk
+.Rhistory
+.RData
+.Rproj.user/
+*.Rproj
+
+# Archives / build artifacts
+*.zip
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.bbl
+paper/*.blg
+
+# OS junk
+.DS_Store
+Thumbs.db
