@@ -18,3 +18,6 @@ paper/*.blg
 # OS junk
 .DS_Store
 Thumbs.db
+paper/manuscript.fdb_latexmk
+paper/manuscript.fls
+paper/manuscript.synctex.gz
