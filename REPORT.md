@@ -1,4 +1,4 @@
-# Reading the Eyes, Not the Mind? — execution report
+# Quantifying Ocular Confounds in EEG Decoding Without an Eye Tracker — execution report
 
 **A portable ocular-confound auditor for EEG decoding: implementation + in-silico
 and real-data validation.**

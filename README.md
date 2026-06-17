@@ -1,4 +1,4 @@
-# Reading the Eyes, Not the Mind? — A Portable Ocular-Confound Auditor for EEG Decoding
+# Quantifying Ocular Confounds in EEG Decoding Without an Eye Tracker
 
 A working **R** implementation and validation of the **Ocular Predictability Index
 (OPI)** auditor: a frozen linear EEG→gaze readout, redeployed as an orthogonal
