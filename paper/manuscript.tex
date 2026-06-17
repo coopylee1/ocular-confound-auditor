@@ -15,7 +15,7 @@
 %
 
 \documentclass[conference]{IEEEtran}
-\IEEEoverridecommandlockouts
+% \IEEEoverridecommandlockouts  % only needed to identify funding in a \thanks footnote; unused here
 
 \usepackage{cite}
 \usepackage{amsmath,amssymb,amsfonts}
@@ -59,13 +59,13 @@ cross-validated area under the curve (AUC) of a paradigm-matched decoder applied
 projection, minus a within-subject label-permutation null. The instrument ships with a
 three-tier reliability gate that returns ``inconclusive'' when gaze cannot be reconstructed in
 the target montage, a measured two-sided bias envelope, and a computable neural-leakage bound.
-Validating against ground truth in a physically grounded EEG+gaze simulator and on real
-64-channel EEG (PhysioNet \texttt{eegmmidb}), the OPI is 0.43 on saccade-coupled ocular data
-and 0.20 on a condition-correlated eye-blink artifact, versus $\le$0.03 on every negative
-control, rising monotonically with the artifact--label coupling. A lateralized neural source
-decodable from full EEG (AUC 0.79) is not decodable from the ocular projection (OPI 0.007,
-n.s.). Neural leakage is governed by the principal-angle overlap between the cognitive
-topography and the ocular subspace (Spearman $\rho=0.95$). A frozen, montage-matched
+Validating against ground truth in a physically grounded simulator of EEG with synchronized
+gaze and on real 64-channel EEG (PhysioNet eegmmidb), the OPI is 0.43 on saccade-coupled ocular
+data and 0.20 on a condition-correlated eye-blink artifact, versus at most 0.03 on every negative
+control, rising monotonically with the artifact-label coupling. A lateralized neural source
+decodable from full EEG (AUC 0.79) is not decodable from the ocular projection (OPI 0.007, not
+significant). Neural leakage is governed by the principal-angle overlap between the cognitive
+topography and the ocular subspace (Spearman correlation 0.95). A frozen, montage-matched
 ocular-subspace auditor thus turns ``how much of this is the eyes?'' into a calibrated,
 two-sided number with a self-declared competence boundary, enabling portable ocular-leakage
 audits of EEG decoding results recorded without an eye-tracker.
