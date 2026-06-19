@@ -18,6 +18,7 @@
 \IEEEoverridecommandlockouts  % enables the corresponding-author \thanks footnote
 
 \usepackage{cite}
+\usepackage{array}
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage{graphicx}
 \usepackage{textcomp}
@@ -29,35 +30,40 @@
 \title{Quantifying Ocular Confounds in EEG Decoding Without an Eye Tracker}
 
 \author{%
-\IEEEauthorblockN{Cooper Lee}
-\IEEEauthorblockA{\textit{Illinois Mathematics and Science Academy}\\
-Aurora, IL, USA\\
-clee1@imsa.edu}
-\and
-\IEEEauthorblockN{Andrew Wong\thanks{Corresponding author: Andrew Wong (aawong@umich.edu).}}
-\IEEEauthorblockA{\textit{University of Michigan}\\
-Ann Arbor, MI, USA\\
-aawong@umich.edu}
-\and
-\IEEEauthorblockN{Ankit Walishetti}
-\IEEEauthorblockA{\textit{Columbia University}\\
-New York, NY, USA\\
-aw3852@columbia.edu}
-\and
-\IEEEauthorblockN{Luke Yin}
-\IEEEauthorblockA{\textit{Princeton University}\\
-Princeton, NJ, USA\\
-ly3569@princeton.edu}
-\and
-\IEEEauthorblockN{Adam Park}
-\IEEEauthorblockA{\textit{Illinois Mathematics and Science Academy}\\
-Aurora, IL, USA\\
-apark1@imsa.edu}
-\and
-\IEEEauthorblockN{Yuan Yang}
-\IEEEauthorblockA{\textit{University of Illinois Urbana-Champaign}\\
-Urbana, IL, USA\\
-yuany@illinois.edu}
+\setlength{\tabcolsep}{10pt}%
+\begin{tabular}{>{\centering\arraybackslash}p{2.0in} >{\centering\arraybackslash}p{2.0in} >{\centering\arraybackslash}p{2.0in}}
+Cooper Lee\newline
+\textit{Illinois Mathematics and Science Academy}\newline
+Aurora, IL, USA\newline
+clee1@imsa.edu
+&
+Andrew Wong\newline
+\textit{University of Michigan}\newline
+Ann Arbor, MI, USA\newline
+aawong@umich.edu
+&
+Ankit Walishetti\newline
+\textit{Columbia University}\newline
+New York, NY, USA\newline
+aw3852@columbia.edu
+\\[2.5ex]
+Luke Yin\newline
+\textit{Princeton University}\newline
+Princeton, NJ, USA\newline
+ly3569@princeton.edu
+&
+Adam Park\newline
+\textit{Illinois Mathematics and Science Academy}\newline
+Aurora, IL, USA\newline
+apark1@imsa.edu
+&
+Yuan Yang\newline
+\textit{University of Illinois Urbana-Champaign}\newline
+Urbana, IL, USA\newline
+yuany@illinois.edu
+\\
+\end{tabular}
+\thanks{Corresponding author: Andrew Wong (aawong@umich.edu).}
 }
 
 \maketitle
