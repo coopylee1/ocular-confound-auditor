@@ -73,8 +73,8 @@ Eye movements, blinks, and the corneo-retinal standing potential leak into scalp
 electroencephalography (EEG) and co-vary with task structure, so a classifier that claims to
 decode a cognitive state may instead be partly reading the eyes. Existing defenses either
 remove ocular signal or model it within a single eye-tracked recording; none provides a
-portable measurement of how much of a published decoding result could be ocular, for the many
-datasets recorded without an eye-tracker. We define and validate an auditing instrument. A
+standardized, montage-matched audit returning a calibrated ocular-predictability estimate for
+completed EEG decoding datasets that lack an eye-tracker. We define and validate an auditing instrument. A
 frozen linear EEG-to-gaze readout, trained where synchronized gaze exists, induces a locked
 ocular subspace (the orthogonal projection onto the span of its weights). The auditor operates
 on all available channels: we report a full 64-channel montage and, as an explicitly specified
@@ -82,17 +82,19 @@ subset, the 30-channel ERP-CORE set. The Ocular Predictability Index (OPI) is th
 cross-validated area under the curve (AUC) of a paradigm-matched decoder applied to that
 projection, minus a within-subject label-permutation null. The instrument ships with a
 three-tier reliability gate that returns ``inconclusive'' when gaze cannot be reconstructed in
-the target montage, a measured two-sided bias envelope, and a computable neural-leakage bound.
-Validating against ground truth in a physically grounded simulator of EEG with synchronized
-gaze and on real 64-channel EEG (PhysioNet eegmmidb), the OPI is 0.43 on saccade-coupled ocular
+the target montage, a measured two-sided bias envelope, and a computable neural-leakage diagnostic.
+We validate against ground truth in a physically grounded EEG-plus-gaze simulator and
+demonstrate the audit logic on real 64-channel EEG that lacks eye tracking (PhysioNet eegmmidb).
+In simulation, the OPI is 0.43 on saccade-coupled ocular
 data and 0.20 on a condition-correlated eye-blink artifact, versus at most 0.03 on every negative
 control, rising monotonically with the artifact-label coupling. A lateralized neural source
 decodable from full EEG (AUC 0.79) is not decodable from the ocular projection (OPI 0.007, not
-significant). Neural leakage is governed by the principal-angle overlap between the cognitive
+significant). Neural leakage tracks the principal-angle overlap between the cognitive
 topography and the ocular subspace (Spearman correlation 0.95). A frozen, montage-matched
-ocular-subspace auditor thus turns ``how much of this is the eyes?'' into a calibrated,
-two-sided number with a self-declared competence boundary, enabling portable ocular-leakage
-audits of EEG decoding results recorded without an eye-tracker.
+ocular-subspace auditor thus estimates how much of a decoding result could be ocular: a
+calibrated number where montage and source conditions are validated, and ``inconclusive'' when
+reliability is insufficient, enabling ocular-leakage audits of EEG decoding results recorded
+without an eye-tracker.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -109,7 +111,7 @@ word) is partly reading the eyes. The eye is an electrical dipole, cornea-positi
 retina-negative, with a standing potential of roughly $0.4$--$1.0$\,mV~\cite{malmivuo1995bioelectromagnetism};
 its rotations, together with blinks and the broadband saccadic spike potential at saccade
 onset~\cite{keren2010saccadic}, project to frontal and periocular electrodes with amplitudes
-that dwarf cortical signals (Fig.~\ref{fig:efield}). Crucially, the field of an eye movement
+that dwarf cortical signals. Crucially, the field of an eye movement
 depends on each electrode's \emph{position} relative to the eyes: its sign reverses across the
 midline (a dipole) and its magnitude falls with distance, and a blink imposes a different,
 symmetric pattern, so the contamination an electrode sees is montage- and artifact-specific.
@@ -119,17 +121,6 @@ cognitive label and inflate apparent accuracy. The danger is the machine-learnin
 mode of shortcut learning: exploiting an incidental correlate rather than the intended
 construct~\cite{geirhos2020shortcut}.
 
-\begin{figure}[!t]
-\centering
-\includegraphics[width=\linewidth]{fig9_efield.png}
-\caption{The electric field of an eye movement depends on electrode position. \emph{Left:}
-scalp field of a $10^\circ$ horizontal eye movement over the 64-channel montage (peak
-$\approx 95\,\mu$V at frontopolar sites; sign reverses left/right of the eyes, a dipole).
-\emph{Right:} field amplitude versus each electrode's distance from the nearest eye. At a given
-distance the sign depends on which side of the eyes the electrode sits (blue vs.\ red); an eye
-blink (green) imposes a distinct, symmetric, one-signed field that also decays with distance.
-This position- and artifact-dependence is why the auditor is montage-matched.}\label{fig:efield}
-\end{figure}
 
 The standard defenses are incomplete. Independent component analysis and regression
 \emph{remove} ocular components~\cite{jung2000removing,plochl2012combining}, but removal is
@@ -148,12 +139,8 @@ and constructed a bespoke, within-experiment control: if the target variable can
 from simultaneously recorded gaze, the neural result is safer. Rotaru
 \emph{et al.}~\cite{rotaru2024decoding} found that EEG decoders of the spatial focus of
 \emph{auditory} attention overfit to eye-gaze and per-trial fingerprints, dropping to chance
-once gaze was controlled. More broadly, the neuroimaging and machine-learning literatures
-increasingly reward auditing the field's methods and benchmarks for inflated inference: cluster-extent
-false positives in fMRI~\cite{eklund2016cluster}, pervasive data leakage in ML-based
-science~\cite{kapoor2023leakage} and specifically in deep-learning
-EEG~\cite{brookshire2024leakage}, and permutation-based tests for
-confounding~\cite{chaibubneto2018permutations}. What is missing is a \emph{transferable
+once gaze was controlled. More broadly, the field increasingly rewards auditing its methods and benchmarks for inflated
+inference~\cite{eklund2016cluster,kapoor2023leakage,brookshire2024leakage,chaibubneto2018permutations}. What is missing, to our knowledge, is a \emph{transferable
 instrument}: a frozen, montage-matched ocular-subspace probe that can be pointed at an
 arbitrary EEG decoding dataset (including one with no gaze recording) and that returns a
 calibrated number together with an honest statement of when it cannot be trusted.
@@ -163,7 +150,7 @@ linear ocular-subspace operator and an \emph{Ocular Predictability Index} (OPI) 
 within-subject permutation null and a full-EEG ceiling; (ii) a three-tier reliability gate
 that returns ``inconclusive'' rather than a false clean bill of health; (iii) a \emph{measured}
 two-sided bias envelope, so the index can neither silently hide contamination nor over-blame
-the eyes; and (iv) a \emph{computable neural-leakage bound}: the one residual failure mode,
+the eyes; and (iv) a \emph{computable neural-leakage diagnostic}: the one residual failure mode,
 that the projection absorbs genuine neural signal, is shown to be governed by the principal
 angle between the cognitive topography and the ocular subspace, converting a reviewer's
 objection into a number. We validate all four against ground truth in a physically grounded
@@ -209,9 +196,11 @@ the locked operator is the orthogonal projection onto it,
 \end{equation}
 a symmetric idempotent $p\times p$ matrix ($\mathbf{P}^2=\mathbf{P}$). Projecting target EEG,
 $\mathbf{X}\mapsto\mathbf{X}\mathbf{P}$, retains only the component lying in the ocular
-readout's span. The operator is fixed by \eqref{eq:proj} before any audit; the auditor is
-retrained on each target's exact channel set (montage-matched, no interpolation of periocular
-channels).
+readout's span. The gaze readout is trained only on source data with synchronized gaze, and the operator is
+fixed by \eqref{eq:proj}. For a target with a different montage, the readout is re-fit \emph{on
+source data restricted to that montage} (montage-matched, no periocular interpolation); the
+operator is thus frozen per montage and applied unchanged to every target, never altered by
+target data or target labels.
 
 \subsection{The Ocular Predictability Index}
 
@@ -223,20 +212,25 @@ within each subject, $B=200$):
 \mathrm{OPI}=\mathrm{AUC}_{\mathrm{proj}}-\overline{\mathrm{AUC}}_{\mathrm{null}},
 \end{equation}
 and is reported alongside the full-EEG AUC as a ceiling and a permutation $p$-value. The
-auditor never sees the target cognitive labels, so audits are out-of-distribution by
-construction.
+ocular-subspace operator is learned without target cognitive labels; the downstream audit
+decoder uses those labels only to quantify how much label information survives in the ocular
+projection.
 
 \subsection{Reliability gate and bias envelope}
 
-\emph{Reliability} is the cross-validated gaze-reconstruction $R^2$ of the montage-restricted
-readout, a property of the montage that requires no target eye-tracker. Thresholds are derived
+\emph{Reliability} is the subject-wise cross-validated gaze-reconstruction $R^2$ of the readout
+restricted to the target montage, computed on \emph{source} data with synchronized gaze
+(held-out source subjects), never on the target. It is therefore a montage-level competence
+score needing no target eye-tracker: an arbitrary no-eye-tracker target inherits the score of
+its matched source montage, and is gated \emph{inconclusive} when no matched source can
+reconstruct gaze. Thresholds are derived
 empirically from the relationship between reliability and index bias and partition results into
 \emph{confirmatory}, \emph{exploratory}, and \emph{inconclusive} tiers. The \emph{bias envelope}
 is measured, not assumed: where ground-truth gaze exists, we compare the auditor's OPI to the
 OPI computed directly from true gaze across the saccade-amplitude range and report the signed
 deviation as a two-sided margin.
 
-\subsection{The neural-leakage bound}
+\subsection{The neural-leakage diagnostic}
 
 The instrument's central risk is that the projection absorbs genuine neural activity that
 happens to be gaze-correlated, inflating the index. We bound this. For a target whose cognitive
@@ -245,10 +239,11 @@ decoder has contrast topography $\mathbf{t}$, define the overlap
 s=\frac{\lVert\mathbf{P}\mathbf{t}\rVert}{\lVert\mathbf{t}\rVert}=\cos\theta,
 \label{eq:overlap}
 \end{equation}
-the cosine of the principal angle $\theta$ between $\mathbf{t}$ and the ocular subspace. $s$
-upper-bounds the fraction of the neural topography that can enter the projection; under the
-linear model, leakage $\to 0$ as $s\to 0$. We report $s$ per audit and test the predicted
-monotonicity empirically.
+the cosine of the principal angle $\theta$ between $\mathbf{t}$ and the ocular subspace. Here
+$s$ is a linear topographic-overlap diagnostic: it gives the fraction of the (linear) contrast
+topography lying in the ocular subspace, and is $0$ when the two are orthogonal. Turning $s$ into
+decodable leakage further depends on the decoder, noise, and signal amplitude, so rather than a
+closed-form bound we report $s$ per audit and show empirically that leakage is monotone in $s$.
 
 \subsection{Grounded EEG+gaze simulator}
 
@@ -256,7 +251,7 @@ Ground-truth validation uses a forward-model simulator on a full 64-channel 10--
 montage; the 30 ERP-CORE electrodes~\cite{kappenman2021erpcore} are an explicitly labelled
 subset of these 64, so the auditor is exercised on all 64 channels and
 the 30-channel case is a deliberately studied restriction, never a silent reduction. Per-trial
-channel patterns are sums of physically grounded source topographies (Fig.~\ref{fig:efield}): a horizontal corneo-retinal field ($\approx 16\,\mu$V per degree), a
+channel patterns are sums of physically grounded source topographies: a horizontal corneo-retinal field ($\approx 16\,\mu$V per degree), a
 vertical/blink frontopolar field, a focal periocular saccadic spike scaling with saccade
 size~\cite{keren2010saccadic}, an $\approx 80\,\mu$V frontopolar blink, and a lateralized
 posterior N2pc-like neural component ($\approx 1.8\,\mu$V)~\cite{luck1994n2pc}, on spatially
@@ -265,6 +260,16 @@ strength, implementing the condition-correlated premise. Scenarios include sacca
 ocular and \emph{blink-coupled} ocular (two positive controls testing distinct artifact types),
 covert attention (lateralized posterior neural source, central gaze), focal motor imagery,
 label shuffle, and a neutral baseline.
+
+For reproducibility: each trial is a single channel-space feature vector, and each source is a
+fixed Gaussian scalp topography scaled by a per-trial amplitude, added to a shared low-rank
+smooth field plus per-channel white noise ($\approx 3\,\mu$V each). The coupling $\rho$ sets the
+probability that gaze (or, for blinks, the blink rate) follows the label. The readout is trained
+on 20 source subjects $\times$ 200 trials at $8^\circ$ saccades; each evaluation cell is 12
+subjects $\times$ 120 trials over 12 fixed-seed studies (error bars are their SD), with ridge
+$\lambda{=}1$ fixed (not tuned in-fold), leave-one-subject-out macro AUC, and a $B{=}200$
+within-subject label-permutation null. Complete generative equations and parameters are in the
+released code.
 
 \subsection{Real data}
 
@@ -280,7 +285,7 @@ negative control) and rest-versus-movement.
 
 The auditor, simulator, and analyses are implemented in R (CPU-only). AUC is computed by the
 rank statistic and cross-checked against the \texttt{pROC} package~\cite{robin2011proc} to
-$<10^{-6}$. The trained auditor is small and CPU-deployable; code and results are released. The
+$<10^{-6}$. The trained auditor is small and CPU-deployable. The
 deployment vision, applying the frozen instrument across public decoding benchmarks
 (e.g.,~\cite{kappenman2021erpcore,gifford2022thingseeg2,arico2014p300jitter,korczowski2019bi2015a},
 accessed via MOABB~\cite{jayaram2018moabb,tangermann2012bcicompetitioniv}), is discussed in
@@ -290,12 +295,10 @@ Section~\ref{sec:discussion}.
 
 \subsection{The operator behaves as specified}
 
-Unit tests confirm the rank-based AUC matches \texttt{pROC} to $<10^{-6}$ including ties; the
-projector of \eqref{eq:proj} is symmetric and idempotent with the correct rank, fixes its
-own column space, and annihilates the orthogonal complement; and, end-to-end, the OPI is large
-and significant when the cognitive signal lies in the ocular subspace and non-significant when
-it lies outside it. The trained auditors had ocular-subspace rank 4 (matching the four ocular
-outputs) on the simulator montages and rank 2 on real \texttt{eegmmidb}.
+Unit tests confirm the rank-based AUC matches \texttt{pROC} to $<10^{-6}$; the projector of
+\eqref{eq:proj} is symmetric, idempotent, and correct-rank; and end-to-end the OPI is large when
+the cognitive signal lies in the ocular subspace and null when it lies outside. The trained
+auditors had ocular-subspace rank 4 on the simulator and rank 2 on real \texttt{eegmmidb}.
 
 
 
@@ -310,7 +313,9 @@ studies. The auditor therefore detects blink contamination as well as saccade co
 Every negative control is near-null in magnitude: motor imagery 0.031, label-shuffle 0.007,
 covert attention 0.007, neutral $-0.003$; their envelope sets an empirical \emph{calibrated
 neural-leakage margin} of $\approx 0.05$ that the index must clear beyond the bare permutation
-null. Decisively, the covert-attention contrast is decodable from full EEG (ceiling AUC 0.79)
+null. Motor imagery reaches significance in 42\% of studies---a tight within-subject null plus a
+small sensorimotor--ocular overlap---yet its OPI of 0.031 sits below this margin, which is why
+the decision rule is the margin, not bare significance. Decisively, the covert-attention contrast is decodable from full EEG (ceiling AUC 0.79)
 yet not from the ocular projection (OPI 0.007, $p=0.48$): the auditor does not absorb lateralized
 posterior neural signal.
 
@@ -399,10 +404,10 @@ Representative amplitudes shown; full grid in released tables.
 \end{table}
 
 
-\subsection{Neural leakage is bounded by a measurable angle}
+\subsection{Neural leakage tracks a measurable overlap angle}
 
 Sweeping a lateralized neural source from posterior to frontal with \emph{no} ocular
-coupling (so any positive OPI is pure leakage), the leakage is governed by the overlap $s$ of
+coupling (so any positive OPI is pure leakage), the leakage is monotone in the overlap $s$ of
 \eqref{eq:overlap} (Fig.~\ref{fig:leak}). It rises monotonically with $s$ (Spearman
 $\rho=0.95$ across the swept range), from $+0.006$ at near-orthogonality ($s\approx0.02$, the
 posterior-N2pc regime) to $+0.12$--$0.14$ when the source is frontal ($s\approx0.6$--$0.8$). The
@@ -456,6 +461,8 @@ Rest vs.\ move\tnote{b}          & 0.672 & 0.615 & $+0.114$ & 0.002 \\
 \end{tabular*}}
 \begin{tablenotes}
 \small
+\item Subject-wise macro-averaging over few subjects raises the permutation-null AUC slightly
+above 0.5 (here $\approx 0.52$); a negative OPI means projected AUC below that null.
 \item[a] Clean negative control (no differential gaze): not decodable from the ocular subspace.
 \item[b] Cautionary: a no-eye-tracker channel proxy retains frontal neural signal.
 \end{tablenotes}
@@ -483,17 +490,15 @@ removal~\cite{jung2000removing,dimigen2020optimizing} and within-recording
 deconvolution~\cite{ehinger2019unfold}. Where confound-quantification in machine learning
 probes a \emph{measured} nuisance variable~\cite{chaibubneto2018permutations}, here the nuisance
 (gaze) is \emph{physically recovered} even when it was never recorded in the target, and the
-back-door through which it could mislead (neural leakage) is bounded by \eqref{eq:overlap}.
+back-door through which it could mislead (neural leakage) is diagnosed by the overlap of \eqref{eq:overlap}.
 This positions the work in the now-active genre of auditing the field's results for inflated
 inference~\cite{eklund2016cluster,kapoor2023leakage,brookshire2024leakage}.
 
 \emph{Toward a field-wide audit.} Because the instrument is portable and CPU-cheap, the natural
-deployment is an ocular-leakage audit across widely used public benchmarks: community-trusted
-ERP data~\cite{kappenman2021erpcore}, P300~\cite{polich2007p300} spellers including overt/covert
-designs~\cite{arico2014p300jitter,korczowski2019bi2015a}, rapid visual streams without any
-eye-tracker~\cite{gifford2022thingseeg2}, and motor-imagery sets, accessed
-uniformly via MOABB~\cite{jayaram2018moabb}, with each no-eye-tracker benchmark paired with a
-gaze- or EOG-bearing anchor so that verdicts are ground-truthable. The competence boundary makes
+deployment is an ocular-leakage audit across widely used public benchmarks (ERP, P300 spellers,
+rapid visual streams, motor imagery~\cite{kappenman2021erpcore,polich2007p300,arico2014p300jitter,gifford2022thingseeg2}),
+accessed uniformly via MOABB~\cite{jayaram2018moabb} and each paired with a gaze- or EOG-bearing
+anchor so that verdicts are ground-truthable. The competence boundary makes
 such a leaderboard honest: a benchmark on which gaze cannot be reconstructed is reported
 ``inconclusive,'' not falsely cleared.
 
@@ -502,9 +507,9 @@ such a leaderboard honest: a benchmark on which gaze cannot be reconstructed is 
 The ground-truth validation is necessarily simulation-based, because measuring bias requires
 knowing the true ocular contribution; the simulator is grounded in measured physiology but is a
 simplification (notably, spatial features rather than full spatiotemporal windows, and a linear
-generative structure aligned with the linear operator). The leakage bound $s$ upper-bounds the
-overlap and its monotonic relationship to leakage is shown empirically under the linear-subspace
-model; both should be tested across real cognitive topographies. Real synchronized-gaze datasets
+generative structure aligned with the linear operator). The overlap score $s$ bounds only the linear topographic overlap, and its monotonic relationship
+to decodable leakage is shown empirically under the linear-subspace model; both should be tested
+across real cognitive topographies. Real synchronized-gaze datasets
 such as EEGEyeNet~\cite{kastrati2021eegeyenet} and ZuCo~\cite{hollenstein2018zuco,hollenstein2020zuco2}
 are the appropriate anchors for training the readout and validating verdicts, but their training
 paradigms are cued large saccades, so the sub-degree fixational regime must be anchored on
@@ -519,7 +524,7 @@ How much of an EEG decoding result could be the eyes rather than the mind is, fo
 datasets, an unanswerable question because no eye-tracker was present. A frozen, montage-matched
 ocular-subspace auditor makes it answerable: it converts the worry into a calibrated, two-sided
 Ocular Predictability Index with a self-declared competence boundary and a computable
-neural-leakage bound, validated here against ground truth and demonstrated on real EEG. The
+neural-leakage diagnostic, validated here against ground truth and demonstrated on real EEG. The
 instrument is small, CPU-runnable, and released, and it is built to be pointed at the field's
 benchmarks, reporting ``inconclusive'' wherever it honestly cannot see.
 
@@ -527,8 +532,8 @@ benchmarks, reporting ``inconclusive'' wherever it honestly cannot see.
 
 The authors thank the providers of the open datasets used in this work. All datasets analyzed are
 publicly available from their original repositories (EEGEyeNet, ERP~CORE, ZuCo, PhysioNet
-\texttt{eegmmidb}, and Brain Invaders); the auditor implementation, simulator, and all analysis
-code and result tables are released with this article. This study used only publicly available,
+\texttt{eegmmidb}, and Brain Invaders); \emph{Code availability:} the auditor, simulator, and analysis scripts (R, CPU-only) and all
+result tables will be made publicly available upon publication. This study used only publicly available,
 de-identified datasets and synthetic data and involved no new human-subjects data collection. The
 authors declare no competing interests and received no specific external funding.
 

@@ -9,9 +9,8 @@ CONTENTS
   manuscript.tex          Main LaTeX source (IEEE conference template, IEEEtran;
                           self-contained, references inlined as \thebibliography)
   manuscript.pdf           Typeset manuscript (reference copy)
-  fig9_efield.png          Figure 1 (electric field of an eye movement)
-  fig4_coupling.png        Figure 2 (graded sensitivity vs. gaze-label coupling)
-  fig8_leakage_angle.png   Figure 3 (neural-leakage bound vs. subspace overlap)
+  fig4_coupling.png        Figure 1 (graded sensitivity vs. gaze-label coupling)
+  fig8_leakage_angle.png   Figure 2 (neural-leakage diagnostic vs. subspace overlap)
 
 COMPILATION
   pdflatex manuscript
