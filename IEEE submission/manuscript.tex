@@ -8,10 +8,9 @@
 %   pdflatex manuscript ; bibtex manuscript ; pdflatex manuscript ; pdflatex manuscript
 %
 % Required files in the same directory:
-%   sn-bibliography.bib, IEEEtran.bst,
-%   fig1_montage.png fig2_topographies.png fig3_h3_battery.png fig4_coupling.png
-%   fig5_bias_envelope.png fig6_reliability_gate.png fig7_real_eegmmidb.png
-%   fig8_leakage_angle.png fig9_efield.png
+%   fig4_coupling.png  fig8_leakage_angle.png
+% (Bibliography is inlined below as \thebibliography, so no .bib/.bst/.bbl
+%  files and no BibTeX run are required.)
 %
 
 \documentclass[conference]{IEEEtran}
@@ -220,15 +219,20 @@ projection.
 
 \emph{Reliability} is the subject-wise cross-validated gaze-reconstruction $R^2$ of the readout
 restricted to the target montage, computed on \emph{source} data with synchronized gaze
-(held-out source subjects), never on the target. It is therefore a montage-level competence
-score needing no target eye-tracker: an arbitrary no-eye-tracker target inherits the score of
-its matched source montage, and is gated \emph{inconclusive} when no matched source can
-reconstruct gaze. Thresholds are derived
-empirically from the relationship between reliability and index bias and partition results into
-\emph{confirmatory}, \emph{exploratory}, and \emph{inconclusive} tiers. The \emph{bias envelope}
-is measured, not assumed: where ground-truth gaze exists, we compare the auditor's OPI to the
-OPI computed directly from true gaze across the saccade-amplitude range and report the signed
-deviation as a two-sided margin.
+(leave-one-subject-out over source subjects), never on the target. Two montages are
+\emph{matched} when they share the channels the readout relies on, chiefly near-eye frontal
+coverage, so this is a montage-level competence score rather than a subject-level one. Transfer
+to an unseen target rests on one stated assumption: the linear ocular-to-scalp map is set by
+electrode geometry and volume conduction from a common ocular generator, so a readout that
+reconstructs gaze across held-out source subjects on a montage should do so for a new subject on
+the same montage. A no-eye-tracker target thus inherits the score of its matched source montage;
+where none matches (for example, too few frontal channels to recover gaze), the gate returns
+\emph{inconclusive} rather than a number. Thresholds are derived empirically from the
+reliability--bias relationship and partition results into \emph{confirmatory},
+\emph{exploratory}, and \emph{inconclusive} tiers. The \emph{bias envelope} is measured, not
+assumed: where ground-truth gaze exists, we compare the auditor's OPI to the OPI computed
+directly from true gaze across the saccade-amplitude range and report the signed deviation as a
+two-sided margin.
 
 \subsection{The neural-leakage diagnostic}
 
@@ -532,8 +536,7 @@ benchmarks, reporting ``inconclusive'' wherever it honestly cannot see.
 
 The authors thank the providers of the open datasets used in this work. All datasets analyzed are
 publicly available from their original repositories (EEGEyeNet, ERP~CORE, ZuCo, PhysioNet
-\texttt{eegmmidb}, and Brain Invaders); \emph{Code availability:} the auditor, simulator, and analysis scripts (R, CPU-only) and all
-result tables will be made publicly available upon publication. This study used only publicly available,
+\texttt{eegmmidb}, and Brain Invaders). This study used only publicly available,
 de-identified datasets and synthetic data and involved no new human-subjects data collection. The
 authors declare no competing interests and received no specific external funding.
 
