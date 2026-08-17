@@ -217,8 +217,8 @@ of contamination.
 
 \subsection{Baselines}
 
-To establish whether gaze training does work a simpler construction would not, we compute the OPI
-under three comparators on identical data, differing only in the subspace projected onto: a
+To establish whether gaze training does work that a simpler construction would not, we compute
+the OPI under three comparators on identical data, differing only in the subspace projected onto: a
 \emph{random} subspace matched in rank; an \emph{EOG proxy} from bipolar channel arithmetic alone
 ($\mathrm{F8}-\mathrm{F7}$, $(\mathrm{Fp1}+\mathrm{Fp2})/2$); and a \emph{frontal-channel audit},
 the coordinate subspace of the 17 frontopolar, anterior-frontal and frontal electrodes.
@@ -338,9 +338,9 @@ frontal approach visibly fails.
 
 \begin{table}[!t]
 \centering
-\caption{OPI by projection (mean $\pm$ 95\% CI over 12 simulated studies, full 64-channel
-montage). Positive controls at $8^\circ$; the fixational row is the discriminating
-one.}\label{tab:baselines}
+\caption{OPI by projection (mean over 12 simulated studies, full 64-channel montage; 95\% CIs
+$\le0.033$ throughout, given per cell in the text). Positive controls at $8^\circ$; the
+fixational row is the discriminating one.}\label{tab:baselines}
 \begin{threeparttable}
 {\small
 \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}} l cccc @{}}
@@ -642,16 +642,22 @@ E.~S. Kappenman, J.~L. Farrens, W.~Zhang, A.~X. Stewart, and S.~J. Luck, ``{ERP
   CORE}: An open resource for human event-related potential research,''
   \emph{NeuroImage}, vol. 225, p. 117465, 2021.
 
-\bibitem{schalk2004bci2000}
-G.~Schalk, D.~J. McFarland, T.~Hinterberger, N.~Birbaumer, and J.~R. Wolpaw,
-  ``{BCI2000}: A general-purpose brain-computer interface ({BCI}) system,''
-  \emph{IEEE Transactions on Biomedical Engineering}, vol.~51, no.~6, pp.
-  1034--1043, 2004.
+\bibitem{haufe2014interpretation}
+S.~Haufe, F.~Meinecke, K.~G{\"o}rgen, S.~D{\"a}hne, J.-D. Haynes, B.~Blankertz,
+  and F.~Bie{\ss}mann, ``On the interpretation of weight vectors of linear
+  models in multivariate neuroimaging,'' \emph{NeuroImage}, vol.~87, pp.
+  96--110, 2014.
 
 \bibitem{luck1994n2pc}
 S.~J. Luck and S.~A. Hillyard, ``Electrophysiological correlates of feature
   analysis during visual search,'' \emph{Psychophysiology}, vol.~31, no.~3, pp.
   291--308, 1994.
+
+\bibitem{schalk2004bci2000}
+G.~Schalk, D.~J. McFarland, T.~Hinterberger, N.~Birbaumer, and J.~R. Wolpaw,
+  ``{BCI2000}: A general-purpose brain-computer interface ({BCI}) system,''
+  \emph{IEEE Transactions on Biomedical Engineering}, vol.~51, no.~6, pp.
+  1034--1043, 2004.
 
 \bibitem{goldberger2000physionet}
 A.~L. Goldberger, L.~A.~N. Amaral, L.~Glass, J.~M. Hausdorff, P.~C. Ivanov,
@@ -659,12 +665,6 @@ A.~L. Goldberger, L.~A.~N. Amaral, L.~Glass, J.~M. Hausdorff, P.~C. Ivanov,
   ``{PhysioBank}, {PhysioToolkit}, and {PhysioNet}: Components of a new
   research resource for complex physiologic signals,'' \emph{Circulation}, vol.
   101, no.~23, pp. e215--e220, 2000.
-
-\bibitem{haufe2014interpretation}
-S.~Haufe, F.~Meinecke, K.~G{\"o}rgen, S.~D{\"a}hne, J.-D. Haynes, B.~Blankertz,
-  and F.~Bie{\ss}mann, ``On the interpretation of weight vectors of linear
-  models in multivariate neuroimaging,'' \emph{NeuroImage}, vol.~87, pp.
-  96--110, 2014.
 
 \end{thebibliography}
 
