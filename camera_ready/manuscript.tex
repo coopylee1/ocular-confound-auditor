@@ -163,7 +163,7 @@ shipped is a linear readout and the orthogonal projection onto the span of its w
 implement and validate exactly that. Because ground truth is available only when gaze is
 recorded or simulated, the primary validation uses a forward-model simulator with known sources.
 The auditor uses every channel a dataset provides; we report a full 64-channel 10--10 montage and
-treat the 30-channel ERP-CORE set~\cite{kappenman2021erpcore} as an explicitly specified subset
+treat the 30 scalp-channel ERP-CORE montage~\cite{kappenman2021erpcore} as an explicitly specified subset
 used to characterise how channel count affects reliability.
 
 \subsection{The frozen gaze-predictive operator}
@@ -268,11 +268,12 @@ therefore what can leak --- is the discriminative direction, and that is what we
 \subsection{Simulator and real data}
 
 Ground-truth validation uses a forward-model simulator on a full 64-channel 10--10 montage.
-Per-trial channel patterns are sums of physically grounded source topographies: a horizontal
-corneo-retinal field ($\approx 16\,\mu$V per degree), a vertical/blink frontopolar field, a focal
-periocular saccadic spike scaling with saccade size~\cite{keren2010saccadic}, an
-$\approx 80\,\mu$V frontopolar blink, and a lateralized posterior N2pc-like neural component
-($\approx 1.8\,\mu$V)~\cite{luck1994n2pc}, on spatially correlated background noise. An artifact
+Per-trial channel patterns sum literature-grounded source topographies whose amplitudes are set
+as simulation parameters within reported ranges: a horizontal corneo-retinal field
+($16\,\mu$V/deg), a vertical/blink frontopolar field, a focal periocular saccadic spike scaling
+with saccade size~\cite{keren2010saccadic}, a frontopolar blink ($80\,\mu$V), and a lateralized
+posterior N2pc-like neural component~\cite{luck1994n2pc} at $1.8\,\mu$V, on spatially correlated
+background noise. An artifact
 is coupled to the cognitive label with tunable strength. Each trial is a single channel-space
 feature vector; this omits the temporal morphology distinguishing sustained corneo-retinal
 shifts, blink waveforms, saccadic spikes, and event-related potentials, and is a substantive
@@ -283,8 +284,8 @@ label-permutation null. Uncertainties are $95\%$ confidence intervals over the 1
 in the leakage sweep of Section~\ref{sec:leak}, which uses 10 subjects over 8 studies.
 Generative equations and parameters are in the released code.
 
-For real data we use PhysioNet \texttt{eegmmidb} (all 64 channels, BCI2000, 160\,Hz; 8
-subjects)~\cite{schalk2004bci2000,goldberger2000physionet}. Because \texttt{eegmmidb} has no
+For real data we use the PhysioNet EEG Motor Movement/Imagery Dataset (\texttt{eegmmidb};
+all 64 channels, BCI2000, 160\,Hz; 8 subjects)~\cite{schalk2009eegmmidb,schalk2004bci2000,pollard2026physionet}. Because \texttt{eegmmidb} has no
 eye-tracker, no gaze-trained operator can be built for it; the subspace is instead estimated from
 the eyes-open baseline run of four \emph{source} subjects and applied to four held-out
 \emph{target} subjects' motor runs. This is an \emph{illustrative proxy}, not a test of the
@@ -590,35 +591,35 @@ T.-P. Jung, S.~Makeig, C.~Humphries, T.-W. Lee, M.~J. McKeown, V.~Iragui, and
 
 \bibitem{dimigen2020optimizing}
 O.~Dimigen, ``Optimizing the {ICA}-based removal of ocular {EEG} artifacts from
-  free viewing experiments,'' \emph{NeuroImage}, vol. 207, p. 116117, 2020.
+  free viewing experiments,'' \emph{NeuroImage}, vol. 207, 2020, Art. no. 116117.
 
 \bibitem{ehinger2019unfold}
 B.~V. Ehinger and O.~Dimigen, ``Unfold: an integrated toolbox for overlap
   correction, non-linear modeling, and regression-based {EEG} analysis,''
-  \emph{PeerJ}, vol.~7, p. e7838, 2019.
+  \emph{PeerJ}, vol.~7, 2019, Art. no. e7838.
 
 \bibitem{mostert2018eye}
 P.~Mostert, A.~M. Albers, L.~Brinkman, L.~Todorova, P.~Kok, and F.~P. de~Lange,
   ``Eye movement-related confounds in neural decoding of visual working memory
-  representations,'' \emph{eNeuro}, vol.~5, no.~4, pp. ENEURO.0401--17.2018,
-  2018.
+  representations,'' \emph{eNeuro}, vol.~5, no.~4, 2018, Art. no.
+  ENEURO.0401-17.2018.
 
 \bibitem{rotaru2024decoding}
 I.~Rotaru, S.~Geirnaert, N.~Heintz, I.~Van~de Ryck, A.~Bertrand, and
-  T.~Francart, ``What are we really decoding? unveiling biases in {EEG}-based
+  T.~Francart, ``What are we really decoding? {U}nveiling biases in {EEG}-based
   decoding of the spatial focus of auditory attention,'' \emph{Journal of
-  Neural Engineering}, vol.~21, no.~1, p. 016017, 2024.
+  Neural Engineering}, vol.~21, no.~1, 2024, Art. no. 016017.
 
 \bibitem{kapoor2023leakage}
 S.~Kapoor and A.~Narayanan, ``Leakage and the reproducibility crisis in
-  machine-learning-based science,'' \emph{Patterns}, vol.~4, no.~9, p. 100804,
-  2023.
+  machine-learning-based science,'' \emph{Patterns}, vol.~4, no.~9, 2023, Art. no.
+  100804.
 
 \bibitem{brookshire2024leakage}
 G.~Brookshire, J.~Kasper, N.~M. Blauch, Y.~C. Wu, R.~Glatt, D.~A. Merrill,
   S.~Gerrol, K.~J. Yoder, C.~Quirk, and C.~Lucero, ``Data leakage in deep
   learning studies of translational {EEG},'' \emph{Frontiers in Neuroscience},
-  vol.~18, p. 1373515, 2024.
+  vol.~18, 2024, Art. no. 1373515.
 
 \bibitem{chaibubneto2018permutations}
 E.~Chaibub~Neto, ``Using permutations to detect, quantify and correct for
@@ -629,18 +630,18 @@ E.~Chaibub~Neto, ``Using permutations to detect, quantify and correct for
 A.~Kastrati, M.~B. P{\l}omecka, D.~Pascual, L.~Wolf, V.~Gillioz,
   R.~Wattenhofer, and N.~Langer, ``{EEGEyeNet}: A simultaneous
   electroencephalography and eye-tracking dataset and benchmark for eye
-  movement prediction,'' in \emph{Advances in Neural Information Processing
-  Systems (NeurIPS), Track on Datasets and Benchmarks}, 2021, arXiv:2111.05100.
+  movement prediction,'' in \emph{Proc. Neural Inf. Process. Syst. Track on
+  Datasets and Benchmarks}, vol.~1, 2021.
 
 \bibitem{hollenstein2018zuco}
 N.~Hollenstein, J.~Rotsztejn, M.~Troendle, A.~Pedroni, C.~Zhang, and N.~Langer,
   ``{ZuCo}, a simultaneous {EEG} and eye-tracking resource for natural sentence
-  reading,'' \emph{Scientific Data}, vol.~5, p. 180291, 2018.
+  reading,'' \emph{Scientific Data}, vol.~5, 2018, Art. no. 180291.
 
 \bibitem{kappenman2021erpcore}
 E.~S. Kappenman, J.~L. Farrens, W.~Zhang, A.~X. Stewart, and S.~J. Luck, ``{ERP
   CORE}: An open resource for human event-related potential research,''
-  \emph{NeuroImage}, vol. 225, p. 117465, 2021.
+  \emph{NeuroImage}, vol. 225, 2021, Art. no. 117465.
 
 \bibitem{haufe2014interpretation}
 S.~Haufe, F.~Meinecke, K.~G{\"o}rgen, S.~D{\"a}hne, J.-D. Haynes, B.~Blankertz,
@@ -653,18 +654,21 @@ S.~J. Luck and S.~A. Hillyard, ``Electrophysiological correlates of feature
   analysis during visual search,'' \emph{Psychophysiology}, vol.~31, no.~3, pp.
   291--308, 1994.
 
+\bibitem{schalk2009eegmmidb}
+G.~Schalk, ``{EEG} Motor Movement/Imagery Dataset,'' version 1.0.0, PhysioNet,
+  2009, doi: 10.13026/C28G6P.
+
 \bibitem{schalk2004bci2000}
 G.~Schalk, D.~J. McFarland, T.~Hinterberger, N.~Birbaumer, and J.~R. Wolpaw,
   ``{BCI2000}: A general-purpose brain-computer interface ({BCI}) system,''
   \emph{IEEE Transactions on Biomedical Engineering}, vol.~51, no.~6, pp.
   1034--1043, 2004.
 
-\bibitem{goldberger2000physionet}
-A.~L. Goldberger, L.~A.~N. Amaral, L.~Glass, J.~M. Hausdorff, P.~C. Ivanov,
-  R.~G. Mark, J.~E. Mietus, G.~B. Moody, C.-K. Peng, and H.~E. Stanley,
-  ``{PhysioBank}, {PhysioToolkit}, and {PhysioNet}: Components of a new
-  research resource for complex physiologic signals,'' \emph{Circulation}, vol.
-  101, no.~23, pp. e215--e220, 2000.
+\bibitem{pollard2026physionet}
+T.~Pollard, B.~E. Moody, L.~H. Lehman, B.~J. Gow, C.~Fernandes, C.~Xie,
+  A.~Johnson, R.~G. Mark, and T.~Heldt, ``{PhysioNet} as a global platform for
+  biomedical research,'' \emph{Nature Health}, vol.~1, no.~8, pp. 792--795,
+  2026.
 
 \end{thebibliography}
 
