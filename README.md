@@ -1,17 +1,25 @@
 # Quantifying Ocular Confounds in EEG Decoding Without an Eye Tracker
 
-A working **R** implementation and validation of the **Ocular Predictability Index
-(OPI)** auditor: a frozen linear EEG→gaze readout, redeployed as an orthogonal
-**ocular-subspace projection**, that measures how much of a cognitive-decoding result
-*could be the eyes* — and that returns **"inconclusive"** rather than a false clean bill
-of health when it cannot reconstruct gaze in the target montage.
+A working **R** implementation of the **Ocular Predictability Index (OPI)**: a frozen linear
+EEG→gaze readout, redeployed as an orthogonal projection onto the **gaze-predictive EEG
+subspace**, which measures how much *label information survives inside that projection* — and
+returns **"inconclusive"** rather than a false clean bill of health when gaze cannot be
+reconstructed in the target montage.
 
-The auditor operates on **all available channels** (a full 64-channel montage as primary,
-with the 30-channel ERP-CORE set as an explicitly specified subset), is calibrated against
-ground truth in a physically grounded EEG+gaze simulator, and is demonstrated on real
-64-channel EEG (PhysioNet `eegmmidb`). See [`REPORT.md`](REPORT.md) for the full execution
-report and [`paper/manuscript.pdf`](paper/manuscript.pdf) for the manuscript.
+> **Read the camera-ready first: [`camera_ready/manuscript.pdf`](camera_ready/manuscript.pdf).**
+> It supersedes `paper/` and `IEEE submission/`. Following peer review the claims were
+> narrowed substantially: the subspace is called *gaze-predictive* rather than *ocular*
+> (specificity to ocular electrical contamination is not established); the OPI is an AUC
+> difference, **not** a fraction of a decoding effect and **not** a causal attribution; the
+> reliability gate supports two tiers, not three; and rank-matched baselines show the
+> headline positive control does not distinguish the method from a random subspace at large
+> saccade amplitudes. `README.md` sections below and `REPORT.md` document the original
+> pre-revision run and retain some of that older framing.
 
+The auditor operates on all available channels (a full 64-channel montage as primary, with the
+30 scalp-channel ERP-CORE montage as an explicitly specified subset), is validated against
+ground truth in a physically grounded EEG+gaze simulator, and is illustrated — not validated —
+on real 64-channel EEG (PhysioNet `eegmmidb`, which has no eye tracker).
 ## Why R (and why that is faithful)
 The **locked operator** is the orthogonal projection onto the span of the frozen **linear**
 gaze/ocular-state readout weights, and the index is AUC-of-a-decoder on that projection
