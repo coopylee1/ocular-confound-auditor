@@ -21,3 +21,6 @@ Thumbs.db
 paper/manuscript.fdb_latexmk
 paper/manuscript.fls
 paper/manuscript.synctex.gz
+
+# Internal revision notes (not published)
+camera_ready/RESPONSE_TO_REVIEWERS.md

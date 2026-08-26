@@ -1,5 +1,13 @@
 # Quantifying Ocular Confounds in EEG Decoding Without an Eye Tracker — execution report
 
+> **Superseded — pre-revision execution record.** This report documents the original run and
+> uses the paper's earlier framing ("ocular subspace", "calibrated", "ceiling", a three-tier
+> gate). The peer-reviewed claims are narrower; see
+> [`camera_ready/manuscript.pdf`](camera_ready/manuscript.pdf) and the E7–E10 tables in
+> `results/tables/` for the baselines, per-output reliability, and held-out calibration added
+> in revision.
+
+
 **A portable ocular-confound auditor for EEG decoding: implementation + in-silico
 and real-data validation.**
 
