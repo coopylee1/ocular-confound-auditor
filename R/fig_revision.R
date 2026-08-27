@@ -35,9 +35,9 @@ abline(h = 0, col = "gray60", lty = 3)
 # --- annotation 1: posterior / near-orthogonal end -------------------------
 # label sits in the empty space ABOVE the low left tail; arrow points down to it
 px <- E9$s_weights[1]; py <- E9$opi_leak[1]
-lx <- px + 0.035; ly <- py + 0.072
+lx <- px + 0.030; ly <- py + 0.078
 text(lx, ly, "posterior source\n(near-orthogonal, leakage ~ 0)",
-     pos = 4, cex = 0.72, col = "#1e8449")
+     pos = 4, cex = 0.90, col = "#1e8449")
 arrows(lx + 0.012, ly - 0.011, px + 0.004, py + 0.016,
        length = 0.06, col = "#1e8449", lwd = 1.3)
 
@@ -45,10 +45,10 @@ arrows(lx + 0.012, ly - 0.011, px + 0.004, py + 0.016,
 # label sits in the empty space BELOW the right shoulder; arrow points up to it
 i  <- which.max(E9$opi_leak)
 qx <- E9$s_weights[i]; qy <- E9$opi_leak[i]
-mx <- qx - 0.105; my <- qy - 0.085
+mx <- qx - 0.120; my <- qy - 0.088
 text(mx, my, "frontal source\n(aligned, leakage grows)",
-     pos = 4, cex = 0.72, col = "#a93226")
-arrows(mx + 0.055, my + 0.013, qx - 0.004, qy - 0.017,
+     pos = 4, cex = 0.90, col = "#a93226")
+arrows(mx + 0.070, my + 0.016, qx - 0.004, qy - 0.017,
        length = 0.06, col = "#a93226", lwd = 1.3)
 
 legend("topleft",
